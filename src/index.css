@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  ---------------------------------------------------------------------------
+  CENTRALIZED THEME TOKENS
+  ---------------------------------------------------------------------------
+  This is the one place to change the site's color system. Values are RGB
+  triplets (no "rgb()" wrapper) so Tailwind can apply opacity modifiers.
+  Everything in the app reads these tokens via Tailwind classes such as
+  bg-base, bg-surface, text-ink, text-muted, text-accent, border-border.
+
+  To change the accent color, edit --color-accent (and --color-accent-ink,
+  the color used for text placed ON TOP of the accent) in both blocks below.
+*/
+:root {
+  --color-base: 247 246 243; /* page background — light */
+  --color-surface: 255 255 255; /* cards / raised surfaces */
+  --color-surface-2: 240 238 233; /* secondary surface, subtle sections */
+  --color-border: 224 221 214;
+  --color-ink: 20 22 28; /* primary text */
+  --color-muted: 96 100 112; /* secondary text */
+
+  --color-accent: 160 100 30; /* accent — AA-safe (4.8:1) on light background */
+  --color-accent-ink: 255 255 255; /* text on top of accent */
+}
+
+.dark {
+  --color-base: 18 20 26; /* page background — dark */
+  --color-surface: 27 30 39;
+  --color-surface-2: 22 24 32;
+  --color-border: 40 44 56;
+  --color-ink: 237 237 237;
+  --color-muted: 144 152 168;
+
+  --color-accent: 217 160 84; /* accent — AA-safe on dark background */
+  --color-accent-ink: 18 20 26;
+}
+
+* {
+  border-color: rgb(var(--color-border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  @apply bg-base text-ink font-body antialiased;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent) / 0.25);
+}
+
+/* Visible, consistent keyboard focus ring across the app */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility: reveal-on-scroll baseline state (see useInView hook) */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reveal.is-visible {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.container-content {
+  @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
+}
